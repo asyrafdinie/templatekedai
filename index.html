@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="ms">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Dapur Mak Teh</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=Nunito+Sans:wght@400;600;700&display=swap">
+<style>
+/* Layout: satu kad digital sehelai, lebar maks 640px, menu dengan butang tempah WhatsApp melekat di bawah.
+   Warna: hijau pandan, perang gula melaka, latar putih kehijauan. Lapisan kuih lapis jadi motif tunggal. */
+:root {
+  --bg: #f1f5ee;
+  --surface: #ffffff;
+  --fg: #17261d;
+  --muted: #4d5f55;
+  --line: #d3ddd0;
+  --green: #1e5b3f;
+  --on-green: #ffffff;
+  --accent: #9a4f17;
+  --l1: #1e5b3f;
+  --l2: #86bf9c;
+  --l3: #f3efe4;
+  --l4: #c98a52;
+  --qr-bg: #ffffff;
+  --qr-fg: #000000;
+  --font-display: "Bricolage Grotesque", "Trebuchet MS", system-ui, sans-serif;
+  --font-body: "Nunito Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0e1712; --surface: #16231b; --fg: #e8efe8; --muted: #a2b3a8; --line: #2a3c31;
+    --green: #58b987; --on-green: #0a1a11; --accent: #e3a468;
+    --l1: #58b987; --l2: #2f6b4b; --l3: #e9e3d2; --l4: #b9783f;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0e1712; --surface: #16231b; --fg: #e8efe8; --muted: #a2b3a8; --line: #2a3c31;
+  --green: #58b987; --on-green: #0a1a11; --accent: #e3a468;
+  --l1: #58b987; --l2: #2f6b4b; --l3: #e9e3d2; --l4: #b9783f;
+  color-scheme: dark;
+}
+
+*{box-sizing:border-box}
+body{margin:0}
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.55;
+  padding-block: 0 112px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.wrap { max-width: 640px; margin-inline: auto; display: flex; flex-direction: column; gap: 40px; }
+h1, h2 { font-family: var(--font-display); text-wrap: balance; margin: 0; line-height: 1.08; }
+p { margin: 0; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
+.num { font-variant-numeric: tabular-nums; }
+
+.sample {
+  margin-inline: calc(-1 * max(16px, env(safe-area-inset-left, 0px)));
+  padding: 8px max(16px, env(safe-area-inset-left, 0px));
+  background: var(--fg); color: var(--bg);
+  font-size: 13px; text-align: center;
+}
+
+/* Hero */
+.hero { display: flex; flex-direction: column; gap: 16px; padding-top: 32px; }
+.eyebrow { font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); }
+h1 { font-size: clamp(2.6rem, 12vw, 4rem); font-weight: 800; letter-spacing: -0.02em; }
+.tagline { font-size: 18px; color: var(--muted); max-width: 34ch; }
+.status { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; font-size: 14px; align-self: flex-start;
+  padding: 6px 12px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); }
+.dot { width: 9px; height: 9px; border-radius: 50%; background: var(--muted); flex: none; }
+.status.open .dot { background: var(--green); }
+.cta { display: flex; flex-wrap: wrap; gap: 10px; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 0 20px;
+  border-radius: 12px; font: inherit; font-weight: 700; text-decoration: none; cursor: pointer;
+  border: 2px solid var(--green); background: var(--green); color: var(--on-green); }
+.btn.ghost { background: transparent; color: var(--fg); border-color: var(--line); }
+.btn.ghost:hover { border-color: var(--green); }
+.lapis { height: 48px; border-radius: 6px;
+  background: repeating-linear-gradient(to bottom, var(--l1) 0 6px, var(--l2) 6px 12px, var(--l3) 12px 18px, var(--l4) 18px 24px, var(--l3) 24px 30px, var(--l2) 30px 36px); }
+
+/* Menu */
+.section { display: flex; flex-direction: column; gap: 16px; }
+h2 { font-size: 1.7rem; font-weight: 800; letter-spacing: -0.01em; }
+.hint { color: var(--muted); font-size: 14px; }
+.menu { list-style: none; margin: 0; padding: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; }
+.item { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 16px; align-items: center; padding: 16px; }
+.item + .item { border-top: 1px solid var(--line); }
+.item h3 { margin: 0; font-size: 17px; font-weight: 700; }
+.item .desc { grid-column: 1; color: var(--muted); font-size: 14px; }
+.item .price { font-weight: 700; color: var(--accent); }
+.item .step { grid-column: 2; grid-row: 1 / span 2; display: flex; align-items: center; gap: 4px; }
+.step button { width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--line); background: var(--bg); color: var(--fg);
+  font: inherit; font-size: 20px; font-weight: 700; cursor: pointer; line-height: 1; }
+.step button:hover { border-color: var(--green); }
+.step output { min-width: 28px; text-align: center; font-weight: 700; }
+
+/* Hours + contact */
+.hours { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+.hours dt, .hours dd { margin: 0; padding: 10px 16px; border-top: 1px solid var(--line); }
+.hours dt:first-of-type, .hours dd:first-of-type { border-top: 0; }
+.hours dd { text-align: right; }
+.hours .today { background: color-mix(in srgb, var(--green) 14%, var(--surface)); font-weight: 700; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px; display: flex; flex-direction: column; gap: 14px; }
+.row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; }
+.big { font-family: var(--font-display); font-weight: 800; font-size: 1.4rem; user-select: all; }
+.small-btn { min-height: 40px; padding: 0 14px; font-size: 14px; }
+.qr { display: flex; flex-wrap: wrap; gap: 20px; align-items: center; }
+.qr svg { width: 168px; height: 168px; flex: none; border-radius: 10px; background: var(--qr-bg); padding: 10px; }
+.qr p { flex: 1 1 200px; min-width: 0; color: var(--muted); }
+
+footer { color: var(--muted); font-size: 13px; padding-bottom: 8px; }
+
+/* Order bar */
+.bar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 5; background: var(--surface); border-top: 1px solid var(--line);
+  padding: 10px max(16px, env(safe-area-inset-left, 0px)) calc(10px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-right, 0px)); }
+.bar-in { max-width: 640px; margin-inline: auto; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.sum { min-width: 0; display: flex; flex-direction: column; line-height: 1.25; }
+.sum b { font-size: 17px; }
+.sum span { font-size: 13px; color: var(--muted); }
+.toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(88px + env(safe-area-inset-bottom, 0px)); z-index: 6;
+  background: var(--fg); color: var(--bg); padding: 8px 16px; border-radius: 999px; font-size: 14px; font-weight: 700; }
+@media (prefers-reduced-motion: no-preference) { .btn, .step button { transition: border-color .15s, background-color .15s; } }
+</style>
+</head>
+<body>
+
+<div class="sample">Contoh templat. Kedai, nombor dan harga di bawah adalah rekaan.</div>
+
+<div class="wrap">
+  <header class="hero">
+    <p class="eyebrow" id="area"></p>
+    <h1 id="name"></h1>
+    <p class="tagline" id="tagline"></p>
+    <p class="status" id="status" role="status"><span class="dot"></span><span id="status-text"></span></p>
+    <div class="cta">
+      <a class="btn" id="wa-hero" target="_blank" rel="noopener">Tempah di WhatsApp</a>
+      <a class="btn ghost" id="maps" target="_blank" rel="noopener">Arah ke kedai</a>
+    </div>
+    <div class="lapis" aria-hidden="true"></div>
+  </header>
+
+  <section class="section" aria-labelledby="h-menu">
+    <h2 id="h-menu">Menu hari ini</h2>
+    <p class="hint">Tekan + untuk pilih. Tempahan terus dihantar ke WhatsApp kedai.</p>
+    <ul class="menu" id="menu"></ul>
+  </section>
+
+  <section class="section" aria-labelledby="h-hours">
+    <h2 id="h-hours">Waktu operasi</h2>
+    <dl class="hours num" id="hours"></dl>
+  </section>
+
+  <section class="section" aria-labelledby="h-find">
+    <h2 id="h-find">Cari kami</h2>
+    <div class="card">
+      <p id="address"></p>
+      <div class="row">
+        <span class="big num" id="phone"></span>
+        <button class="btn ghost small-btn" id="copy" type="button">Salin nombor</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="h-qr" id="qr-section" hidden>
+    <h2 id="h-qr">Kongsi kedai ini</h2>
+    <div class="card qr">
+      <svg id="qr" viewBox="0 0 10 10" role="img" aria-label="Kod QR ke halaman kedai ini"></svg>
+      <p>Cetak kod QR ini dan letak di kaunter, bungkusan atau kad nama. Pelanggan imbas terus ke menu dan butang tempah.</p>
+    </div>
+  </section>
+
+  <footer>
+    <p>Templat laman kad digital untuk kedai kecil. Tukar bahagian CONFIG di atas skrip untuk menyediakan kedai lain.</p>
+  </footer>
+</div>
+
+<div class="bar">
+  <div class="bar-in">
+    <div class="sum"><b class="num" id="sum-main">Belum ada pilihan</b><span id="sum-sub">Atau tanya terus di WhatsApp</span></div>
+    <a class="btn" id="wa-bar" target="_blank" rel="noopener">Hantar</a>
+  </div>
+</div>
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+<script>
+/* ===== CONFIG: tukar bahagian ini sahaja untuk kedai lain ===== */
+const CONFIG = {
+  name: "Dapur Mak Teh",
+  area: "Taman Seri Gombak · Nasi lemak & kuih",
+  tagline: "Nasi lemak sambal tumbuk dan kuih tradisional, siap setiap pagi.",
+  address: "Lot contoh, Jalan contoh, Taman Seri Gombak",
+  mapsQuery: "Taman Seri Gombak",
+  whatsapp: "60120000000",
+  phoneDisplay: "012-000 0000",
+  pageUrl: "",
+  currency: "RM",
+  /* 0 = Ahad ... 6 = Sabtu. [buka, tutup] dalam jam 24, atau null jika tutup */
+  hours: { 0: [6.5, 13], 1: null, 2: [6.5, 13], 3: [6.5, 13], 4: [6.5, 13], 5: [6.5, 13], 6: [6.5, 13] },
+  menu: [
+    { id: "nl1", name: "Nasi lemak biasa", desc: "Sambal tumbuk, telur rebus, timun, ikan bilis", price: 3.0 },
+    { id: "nl2", name: "Nasi lemak ayam goreng", desc: "Dengan ayam goreng berempah", price: 6.5 },
+    { id: "kl", name: "Kuih lapis", desc: "5 keping, lapis pandan dan santan", price: 4.0 },
+    { id: "kp", name: "Karipap sardin", desc: "5 biji, digoreng pagi itu", price: 3.5 },
+    { id: "sm", name: "Seri muka", desc: "1 potong, pulut dan kastard pandan", price: 2.0 },
+    { id: "bk", name: "Bubur kacang", desc: "1 cawan, santan pekat", price: 3.0 }
+  ]
+};
+/* ================================================================ */
+
+const DAYS = ["Ahad", "Isnin", "Selasa", "Rabu", "Khamis", "Jumaat", "Sabtu"];
+const $ = (id) => document.getElementById(id);
+const rm = (n) => CONFIG.currency + n.toFixed(2);
+
+function fmtTime(h) {
+  const hh = Math.floor(h), mm = Math.round((h - hh) * 60);
+  const h12 = hh % 12 === 0 ? 12 : hh % 12;
+  const period = hh < 12 ? "pagi" : hh < 19 ? "petang" : "malam";
+  return h12 + ":" + String(mm).padStart(2, "0") + " " + period;
+}
+function klNow() {
+  try { return new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Kuala_Lumpur" })); }
+  catch (e) { return new Date(); }
+}
+function waLink(text) {
+  return "https://wa.me/" + CONFIG.whatsapp + (text ? "?text=" + encodeURIComponent(text) : "");
+}
+
+/* Header + butang */
+document.title = CONFIG.name;
+$("name").textContent = CONFIG.name;
+$("area").textContent = CONFIG.area;
+$("tagline").textContent = CONFIG.tagline;
+$("address").textContent = CONFIG.address;
+$("phone").textContent = CONFIG.phoneDisplay;
+$("maps").href = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(CONFIG.mapsQuery);
+const hello = "Salam, saya nak tanya tentang menu " + CONFIG.name + ".";
+$("wa-hero").href = waLink(hello);
+
+/* Waktu operasi + status buka/tutup */
+const now = klNow();
+const today = now.getDay();
+const hoursEl = $("hours");
+[1, 2, 3, 4, 5, 6, 0].forEach((d) => {
+  const dt = document.createElement("dt"), dd = document.createElement("dd");
+  dt.textContent = DAYS[d];
+  const h = CONFIG.hours[d];
+  dd.textContent = h ? fmtTime(h[0]) + " - " + fmtTime(h[1]) : "Tutup";
+  if (d === today) { dt.className = "today"; dd.className = "today"; }
+  hoursEl.append(dt, dd);
+});
+(function status() {
+  const cur = now.getHours() + now.getMinutes() / 60;
+  const h = CONFIG.hours[today];
+  let text = "", open = false;
+  if (h && cur >= h[0] && cur < h[1]) { open = true; text = "Buka sekarang, tutup " + fmtTime(h[1]); }
+  else if (h && cur < h[0]) { text = "Belum buka, buka " + fmtTime(h[0]); }
+  else {
+    for (let i = 1; i <= 7; i++) {
+      const d = (today + i) % 7, nh = CONFIG.hours[d];
+      if (nh) { text = "Tutup, buka " + (i === 1 ? "esok" : DAYS[d]) + " " + fmtTime(nh[0]); break; }
+    }
+  }
+  $("status-text").textContent = text;
+  $("status").classList.toggle("open", open);
+})();
+
+/* Menu + tempahan */
+const qty = {};
+const menuEl = $("menu");
+CONFIG.menu.forEach((it) => {
+  qty[it.id] = 0;
+  const li = document.createElement("li");
+  li.className = "item";
+  li.innerHTML =
+    '<h3></h3><p class="desc"></p>' +
+    '<div class="step"><button type="button" aria-label="Kurang"></button><output class="num">0</output><button type="button" aria-label="Tambah"></button></div>';
+  li.querySelector("h3").textContent = it.name + " ";
+  const price = document.createElement("span");
+  price.className = "price num";
+  price.textContent = rm(it.price);
+  li.querySelector("h3").append(price);
+  li.querySelector(".desc").textContent = it.desc;
+  const [minus, plus] = li.querySelectorAll("button");
+  minus.textContent = "−"; plus.textContent = "+";
+  const out = li.querySelector("output");
+  const set = (v) => { qty[it.id] = Math.max(0, Math.min(99, v)); out.textContent = qty[it.id]; update(); };
+  minus.onclick = () => set(qty[it.id] - 1);
+  plus.onclick = () => set(qty[it.id] + 1);
+  menuEl.append(li);
+});
+
+function update() {
+  const picked = CONFIG.menu.filter((it) => qty[it.id] > 0);
+  const count = picked.reduce((s, it) => s + qty[it.id], 0);
+  const total = picked.reduce((s, it) => s + qty[it.id] * it.price, 0);
+  const bar = $("wa-bar");
+  if (!count) {
+    $("sum-main").textContent = "Belum ada pilihan";
+    $("sum-sub").textContent = "Atau tanya terus di WhatsApp";
+    bar.textContent = "Tanya";
+    bar.href = waLink(hello);
+    return;
+  }
+  $("sum-main").textContent = count + " item · " + rm(total);
+  $("sum-sub").textContent = "Jumlah belum termasuk penghantaran";
+  bar.textContent = "Hantar tempahan";
+  const lines = picked.map((it) => "- " + qty[it.id] + " x " + it.name + " (" + rm(qty[it.id] * it.price) + ")");
+  const msg = "Salam, saya nak tempah di " + CONFIG.name + ":\n" + lines.join("\n") +
+    "\nJumlah: " + rm(total) + "\nNama:\nAmbil sendiri / hantar:";
+  bar.href = waLink(msg);
+}
+update();
+
+/* Salin nombor */
+function toast(t) {
+  const el = $("toast"); el.textContent = t; el.hidden = false;
+  clearTimeout(toast.t); toast.t = setTimeout(() => { el.hidden = true; }, 1800);
+}
+$("copy").onclick = () => {
+  const num = CONFIG.phoneDisplay;
+  const fallback = () => {
+    const r = document.createRange(); r.selectNodeContents($("phone"));
+    const s = getSelection(); s.removeAllRanges(); s.addRange(r);
+    toast("Nombor dipilih, tekan salin");
+  };
+  try { navigator.clipboard.writeText(num).then(() => toast("Nombor disalin"), fallback); }
+  catch (e) { fallback(); }
+};
+
+/* Kod QR ke halaman ini */
+(function qr() {
+  try {
+    const q = qrcode(0, "M");
+    q.addData(CONFIG.pageUrl || location.href);
+    q.make();
+    const n = q.getModuleCount(), svg = $("qr");
+    svg.setAttribute("viewBox", "0 0 " + n + " " + n);
+    let d = "";
+    for (let r = 0; r < n; r++) for (let c = 0; c < n; c++) if (q.isDark(r, c)) d += "M" + c + " " + r + "h1v1h-1z";
+    svg.innerHTML = '<path d="' + d + '" fill="var(--qr-fg)"/>';
+    $("qr-section").hidden = false;
+  } catch (e) { /* QR tidak dapat dijana, bahagian kekal tersembunyi */ }
+})();
+</script>
+</body>
+</html>
